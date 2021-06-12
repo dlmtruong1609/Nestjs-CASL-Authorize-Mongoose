@@ -8,7 +8,7 @@ import {
 import { Injectable } from '@nestjs/common';
 import { Article } from 'src/entities/article.entity';
 import { User } from 'src/entities/user.entity';
-import { Action } from 'src/policies/enums/action.enum';
+import { Action } from 'src/common/enums/action.enum';
 
 type Subjects = InferSubjects<typeof Article | typeof User> | 'all';
 
