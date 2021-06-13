@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/guards/local-auth.guard';
-import { CreateUserDto } from './users/dto/create-user.dto';
+import { SignUpDto } from './users/dto/signup.dto';
 
 @Controller()
 export class AppController {
@@ -14,8 +14,8 @@ export class AppController {
   }
 
   @Post('auth/register')
-  async register(@Body() createCatDto: CreateUserDto) {
-    const user = await this.authService.register(createCatDto);
+  async register(@Body() signUpDto: SignUpDto) {
+    const user = await this.authService.register(signUpDto);
     const accessToken = await this.authService.login(user);
     user.password = null;
     return {
