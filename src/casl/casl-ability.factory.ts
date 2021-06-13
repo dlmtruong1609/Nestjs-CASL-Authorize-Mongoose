@@ -6,9 +6,11 @@ import {
   InferSubjects,
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { Article } from 'src/entities/article.entity';
-import { User } from 'src/entities/user.entity';
 import { Action } from 'src/common/enums/action.enum';
+import { Roles } from 'src/common/enums/roles.enum';
+import { Status } from 'src/common/enums/status.enum';
+import { Article } from 'src/schemas/article.schema';
+import { User } from 'src/schemas/user.schema';
 
 type Subjects = InferSubjects<typeof Article | typeof User> | 'all';
 
@@ -21,14 +23,17 @@ export class CaslAbilityFactory {
       Ability<[Action, Subjects]>
     >(Ability as AbilityClass<AppAbility>);
 
-    if (user.isAdmin) {
+    if (user.roles.includes(Roles.Admin)) {
       can(Action.Manage, 'all'); // read-write access to everything
     } else {
-      can(Action.Read, 'all'); // read-only access to everything
+      can(Action.Read, Article, { isPublished: true, status: Status.Approved });
+      can(Action.Read, User);
     }
 
-    can(Action.Update, Article, { authorId: user.id });
-    cannot(Action.Delete, Article, { isPublished: true });
+    can(Action.Update, Article, { author: user });
+    cannot(Action.Delete, Article, { author: user });
+
+    can(Action.Update, User, { email: user.email });
 
     return build({
       detectSubjectType: (item) =>
