@@ -14,7 +14,7 @@ export class User {
   @Prop()
   name: string;
 
-  @Prop({ select: false })
+  @Prop()
   password: string;
 
   @Prop({ required: true, default: false })
@@ -44,20 +44,11 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.pre<User>('save', function (next) {
+UserSchema.pre<User>('save', async function (next) {
   if (this.password) {
-    bcrypt.genSalt(10, (err, salt) => {
-      if (err) return next(err);
-
-      bcrypt.hash(this.password, salt, (err, hash) => {
-        if (err) return next(err);
-
-        this.password = hash;
-
-        console.log(this);
-
-        next();
-      });
-    });
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(this.password, salt);
+    this.password = hash;
+    next();
   }
 });
