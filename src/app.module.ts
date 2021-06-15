@@ -5,7 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { CaslModule } from './casl/casl.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ArticleModule } from './article/article.module';
+import { ArticleModule } from './articles/article.module';
 
 @Module({
   imports: [

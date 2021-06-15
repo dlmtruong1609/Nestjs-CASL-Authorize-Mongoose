@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaginateModel } from 'mongoose-paginate-v2';
 import { Article } from 'src/schemas/article.schema';
-import { CreateArticleDto } from 'src/article/dto/create-article.dto';
+import { CreateArticleDto } from 'src/articles/dto/create-article.dto';
 import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { Action } from 'src/common/enums/action.enum';
 import { User } from 'src/schemas/user.schema';
