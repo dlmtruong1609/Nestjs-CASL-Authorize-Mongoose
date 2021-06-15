@@ -6,9 +6,11 @@ import { CaslModule } from '../casl/casl.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/schemas/user.schema';
 import { IsUserAlreadyExistConstraint } from './decorators/Is-user-already-exist.decorators';
+import { ArticleModule } from 'src/article/article.module';
 
 @Module({
   imports: [
+    forwardRef(() => ArticleModule),
     forwardRef(() => AuthModule),
     forwardRef(() => CaslModule),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),

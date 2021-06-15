@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { User } from './user.schema';
+import * as mongoosePaginate from 'mongoose-paginate-v2';
 import { Status } from 'src/common/enums/status.enum';
 
 export type ArticleDocument = Article & Document;
@@ -15,7 +16,7 @@ export class Article {
   description: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  author: User;
+  author: any;
 
   @Prop({ default: false })
   isPublished: boolean;
@@ -28,3 +29,5 @@ export class Article {
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);
+
+ArticleSchema.plugin(mongoosePaginate);

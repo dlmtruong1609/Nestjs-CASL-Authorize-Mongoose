@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { CaslModule } from './casl/casl.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ArticleModule } from './article/article.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     MongooseModule.forRoot(process.env.DATABASE_URL),
     AuthModule,
     CaslModule,
+    ArticleModule,
   ],
   controllers: [AppController],
 })
